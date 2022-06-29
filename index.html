@@ -5,11 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap" rel="stylesheet">
     <title>Forum App</title>
 </head>
 <body>
     <div id="app">
-        <h1>{{ test }}</h1>
+        <div id="login-form" v-show="currentPage == 'login-page'">
+            <h1 v-show="currentPage == 'login-page'">Login</h1>
+            <input type="text" placeholder="Email" v-model="loginEmailInput" class="input-style">
+            <input type="password" placeholder="Password" v-model="loginPasswordInput" class="input-style">
+            <button @click="postSession" class="button-style">Login</button>
+            <button @click="currentPage = 'signup-page'" class="button-style">Signup</button>
+        </div>
+
+        <div id="signup-form" v-show="currentPage == 'signup-page'">
+            <h1 v-show="currentPage == 'signup-page'">Register</h1>
+            <input type="text" placeholder="Email" v-model="newEmailInput" class="input-style">
+            <input type="password" placeholder="Password" v-model="newPasswordInput" class="input-style">
+            <input type="text" placeholder="Full name" v-model="newFullNameInput" class="input-style">
+            <button @click="postUser" class="button-style">Create Account</button>
+        </div>
+
+        <section id="home-page" v-show="currentPage == 'home-page'">
+            <h1>Home Page</h1>
+        </section>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="app.js"></script>
