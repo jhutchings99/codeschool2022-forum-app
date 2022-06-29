@@ -13,6 +13,8 @@ var app = new Vue({
         newEmailInput: "",
         newPasswordInput: "",
         newFullNameInput: "",
+
+        errorMessage: "",
     },
     methods: {
         // GET /session - Ask server if we are logged in
@@ -28,6 +30,7 @@ var app = new Vue({
                 console.log("logged in");
                 let data = await response.json();
                 console.log(data);
+                this.currentPage = "home-page"
             } else if (response.status == 401) {
                 // not logged in
                 console.log("not logged in");
@@ -63,13 +66,19 @@ var app = new Vue({
                 this.loginPasswordInput = "";
 
             } else if (response.status == 401) {
-                console.log("Unsuccessful login attemp")
-
+                console.log("Unsuccessful login attempt")
+                this.errorMessage = "Unsuccessful login attempt. Check email and password"
+                setInterval(() => {
+                    this.errorMessage = "";
+                }, 5000);
                 // Let user know login failed and clear password input
-                alert("Unsuccessful login");
                 this.loginPasswordInput = "";
             } else {
                 console.log("error POSTING /session", response.status, response);
+                this.errorMessage = "Ensure all fields are filled out and email is valid"
+                setInterval(() => {
+                    this.errorMessage = "";
+                }, 5000);
             }
         },
         // POST /users - Create new user
@@ -104,14 +113,21 @@ var app = new Vue({
 
             } else if (response.status == 400) {
                 console.log("Unsuccessful user creation");
+                this.errorMessage = "Unsuccessful user creation"
+                setInterval(() => {
+                    this.errorMessage = "";
+                }, 5000);
 
                 // Let user know user creation failed and clear inputs
-                alert("Unsuccessful user creation");
                 this.newEmailInput = "";
                 this.newPasswordInput = "";
                 this.newFullNameInput = "";
             } else {
                 console.log("error POSTING /users", response.status, response);
+                this.errorMessage = "Ensure all fields are filled out and email is valid"
+                setInterval(() => {
+                    this.errorMessage = "";
+                }, 5000);
             }
         }
     },
