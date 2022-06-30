@@ -12,26 +12,28 @@
 </head>
 <body>
     <div id="app">
-        <div id="login-form" v-show="currentPage == 'login-page'">
-            <h1>Login</h1>
-            <input type="text" placeholder="Email" v-model="loginEmailInput" class="input-style">
-            <input type="password" placeholder="Password" v-model="loginPasswordInput" class="input-style">
-            <div>
-                <button @click="postSession" class="button-style">Login</button>
-                <button @click="currentPage = 'signup-page'" class="button-style">Signup</button>
+        <div id="login-container" v-show="currentPage == 'login-page'">
+            <div id="login-form">
+                <h1>Login</h1>
+                <input type="text" placeholder="Email" v-model="loginEmailInput" class="input-style">
+                <input type="password" placeholder="Password" v-model="loginPasswordInput" class="input-style">
+                <div>
+                    <button @click="postSession" class="button-style">Login</button>
+                    <button @click="currentPage = 'signup-page'" class="button-style">Signup</button>
+                </div>
+                <p class="alert-message">{{ errorMessage }}</p>
             </div>
-            <p class="alert-message">{{ errorMessage }}</p>
+        </div> 
+        <div id="signup-container" v-show="currentPage == 'signup-page'">
+            <div id="signup-form">
+                <h1>Register</h1>
+                <input type="text" placeholder="Full name" v-model="newFullNameInput" class="input-style">
+                <input type="text" placeholder="Email" v-model="newEmailInput" class="input-style">
+                <input type="password" placeholder="Password" v-model="newPasswordInput" class="input-style">
+                <button @click="postUser" class="button-style">Create Account</button>
+                <p class="alert-message">{{ errorMessage }}</p>
+            </div>
         </div>
-
-        <div id="signup-form" v-show="currentPage == 'signup-page'">
-            <h1>Register</h1>
-            <input type="text" placeholder="Full name" v-model="newFullNameInput" class="input-style">
-            <input type="text" placeholder="Email" v-model="newEmailInput" class="input-style">
-            <input type="password" placeholder="Password" v-model="newPasswordInput" class="input-style">
-            <button @click="postUser" class="button-style">Create Account</button>
-            <p class="alert-message">{{ errorMessage }}</p>
-        </div>
-
         <section id="home-page" v-show="currentPage == 'home-page'">
             <h1>Home Page</h1>
         </section>

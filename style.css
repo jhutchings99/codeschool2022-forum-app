@@ -18,6 +18,7 @@
 #login-form h1 {
     font-size: 3rem;
     margin-bottom: 1.5rem;
+    color: #20ad00;
 }
 
 .input-style {
@@ -35,10 +36,32 @@
     margin-bottom: 20px;
     font-size: 20px;
     transition: 0.5s;
+    background-color: #20ad00;
+    color: white;
+    border: none;
 }
 
 .button-style:hover {
     box-shadow: 0px 5px 0px black;
+}
+
+#login-container {
+    background-color: rgb(236, 236, 236);
+    height: 800px;
+    width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    box-shadow: 5px 5px 10px black;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 50px;
 }
 
 /* ============= SIGNUP FORM ================ */
@@ -54,10 +77,24 @@
 #signup-form h1 {
     font-size: 3rem;
     margin-bottom: 1.5rem;
+    color: #20ad00;
+}
+
+#signup-container {
+    background-color: rgb(236, 236, 236);
+    height: 800px;
+    width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    box-shadow: 5px 5px 10px black;
 }
 
 /* ========== ALERT AREA =================== */
 .alert-message {
     color: red;
     font-size: 20px;
+    position: absolute;
+    bottom: 10%;
 }
