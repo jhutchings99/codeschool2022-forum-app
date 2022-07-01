@@ -209,7 +209,7 @@ var app = new Vue({
             }
         },
         loadThreadPage: function () {
-            this.setPage("thread");
+            this.currentPage = 'thread';
         },
         getSingleThread: async function (id) {
             let response = await fetch(URL + "/thread/" + id, {
@@ -222,6 +222,20 @@ var app = new Vue({
                 this.loadThreadPage();
             } else {
                 console.error("Error fetching individual request with id", id, "- status:", response.status);
+            }
+        },
+        // DELETE /threads - Delete thread object
+        deleteThread: async function (thread) {
+            let response = await fetch(URL + "/thread/" + thread._id, {
+                method: "DELETE",
+                credentials: "include"
+            });
+
+            // check response status
+            if (response.status == 200) {
+                this.getThreads();
+            } else {
+                console.error("Error deleting thread with id", id, "- status:", response.status);
             }
         }
     },

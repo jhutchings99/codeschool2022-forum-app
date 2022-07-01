@@ -38,12 +38,13 @@
             <h1 class="page-title">Home Page</h1>
             <button @click="currentPage = 'create-thread-page'" class="button-style">Create Thread</button>
             <div id="thread" v-for="(thread,index) in allThreads" class="thread">
-                <p>Posted by: {{ thread.user.username }}</p><br>
+                <p>Posted by: {{ thread.user.fullname }}</p><br>
                 <p>Created at: {{ thread.createdAt }}</p>
                 <h1>{{ thread.name }}</h1><br>
                 <p>{{ thread.category }}</p><br>
                 <h4>{{ thread.description }}</h4>
-                <button @click="currentThread = thread._id">View Thread</button>
+                <button @click="getSingleThread(thread._id); loadThreadPage()" class="button-style">View Thread</button>
+                <button class="button-style" v-bind:style="{ backgroundColor: 'red' }" @click="deleteThread(thread)">Delete Thread</button>
             </div>
         </section>
         <section id="create-thread" v-show="currentPage == 'create-thread-page'">
@@ -56,12 +57,21 @@
                 <p class="alert-message">{{ errorMessage }}</p>
             </div>
         </section>
-        <section v-show="currentPage == 'thread'">
-            <h1>{{ currentThread.name }}</h1>
-            <div v-for="post in currentThread.posts">
+        <section id="thread-page" v-show="currentPage == 'thread'">
+            <button class="button-style" @click="currentPage = 'home-page'">Back to threads</button>
+            <h1>Thread</h1>
+            <div class="thread">
+                <p v-if="currentPage == 'thread'">Posted by: {{ currentThread.user.fullname }}</p><br>
+                <p>Created at: {{ currentThread.createdAt }}</p>
+                <h1>{{ currentThread.name }}</h1><br>
+                <p>{{ currentThread.category }}</p><br>
+                <h4>{{ currentThread.description }}</h4>
+            </div>
+            <h2>Comments</h2>
+            <div v-for="post in currentThread.posts" class="thread-post">
                 <p>
                     {{ post.body }} - 
-                    <i>{{ post.user.fullname }}</i>
+                    <i>Commented By: {{ post.user.fullname }}</i>
                 </p>
             </div>
         </section>

@@ -138,3 +138,24 @@
     justify-content: center;
     align-items: center;
 }
+
+/* ===================== SINGLE THREAD PAGE ========================== */
+#thread-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.single-thread {
+    padding: 100px;
+    background-color: rgb(205, 205, 205);
+    margin: 20px;
+    width: 100%;
+}
+
+.thread-post {
+    padding: 100px;
+    background-color: rgb(148, 148, 148);
+    width: 100%;
+}
