@@ -37,13 +37,12 @@
         <section id="home-page" v-show="currentPage == 'home-page'">
             <h1 class="page-title">Home Page</h1>
             <button @click="currentPage = 'create-thread-page'" class="button-style">Create Thread</button>
-            <div id="thread" v-for="(thread,index) in allThreads" class="thread">
+            <div id="thread" v-for="(thread,index) in allThreads" class="mainthread" @click="getSingleThread(thread._id); loadThreadPage()">
                 <p>Posted by: {{ thread.user.fullname }}</p><br>
                 <p>Created at: {{ thread.createdAt }}</p>
                 <h1>{{ thread.name }}</h1><br>
                 <p>{{ thread.category }}</p><br>
                 <h4>{{ thread.description }}</h4>
-                <button @click="getSingleThread(thread._id); loadThreadPage()" class="button-style">View Thread</button>
                 <button class="button-style" v-bind:style="{ backgroundColor: 'red' }" @click="deleteThread(thread)">Delete Thread</button>
             </div>
         </section>

@@ -124,6 +124,20 @@
     width: 100%;
 }
 
+.mainthread {
+    padding: 100px;
+    background-color: rgb(205, 205, 205);
+    margin: 20px;
+    width: 100%;
+}
+
+.mainthread:hover {
+background-color: rgb(236, 236, 236);
+box-shadow: 5px 5px 10px black;
+}
+
+
+
 /* ====================== CREATE THREAD PAGE ===================== */
 #create-thread {
     display: flex;
