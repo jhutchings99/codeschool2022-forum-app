@@ -50,9 +50,9 @@
         <section id="create-thread" v-show="currentPage == 'create-thread-page'">
             <h1 class="page-title">Create Thread</h1>
             <div id="create-thread-container">
-                <input type="text" id="thread-name" placeholder="Enter thread name" class="input-style">
-                <input type="text" id="thread-description" placeholder="Enter thread description" class="input-style">
-                <input type="text" id="thread-category" placeholder="Enter thread category" class="input-style">
+                <input type="text" id="thread-name" placeholder="Enter thread name" class="input-style" v-model="createThreadName">
+                <input type="text" id="thread-description" placeholder="Enter thread description" class="input-style" v-model="createThreadDescription">
+                <input type="text" id="thread-category" placeholder="Enter thread category" class="input-style" v-model="createThreadCategory">
                 <button class="button-style" @click="postThread">Create Thread</button>
                 <p class="alert-message">{{ errorMessage }}</p>
             </div>
@@ -66,13 +66,23 @@
                 <h1>{{ currentThread.name }}</h1><br>
                 <p>{{ currentThread.category }}</p><br>
                 <h4>{{ currentThread.description }}</h4>
+                <button class="button-style" @click="commenting = true" v-if="commenting == false">Comment</button>
+                <div v-if="commenting">
+                    <input type="text" v-model="newPostBody">
+                    <button @click="postPost(currentThread._id); commenting = false; getThreads()">Post Comment</button>
+                    <button @click="commenting = false;">Cancel Comment</button>
+
+                </div>
             </div>
             <h2>Comments</h2>
             <div v-for="post in currentThread.posts" class="thread-post">
-                <p>
-                    {{ post.body }} - 
-                    <i>Commented By: {{ post.user.fullname }}</i>
-                </p>
+                <div>
+                    <p>
+                        {{ post.body }} - 
+                        <i>Commented By: {{ post.user.fullname }}</i>
+                    </p>
+                    <!-- <button class="button-style" v-bind:style="{ backgroundColor: 'red' }">Delete Comment</button> -->
+                </div>
             </div>
         </section>
     </div>

@@ -1,0 +1,26 @@
+{
+  "name": "codeschool2022-forum-app",
+  "version": "1.0.0",
+  "description": "forum app codeschool 2022",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhutchings99/codeschool2022-forum-app.git"
+  },
+  "author": "Jeremy Hutchings",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jhutchings99/codeschool2022-forum-app/issues"
+  },
+  "homepage": "https://github.com/jhutchings99/codeschool2022-forum-app#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "opn": "^6.0.0"
+  }
+}

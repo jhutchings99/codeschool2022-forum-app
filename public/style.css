@@ -157,5 +157,6 @@
 .thread-post {
     padding: 100px;
     background-color: rgb(148, 148, 148);
-    width: 100%;
+    width: 90vw;
+    margin: 1px;
 }

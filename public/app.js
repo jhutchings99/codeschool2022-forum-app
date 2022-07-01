@@ -13,6 +13,7 @@ var app = new Vue({
         newEmailInput: "",
         newPasswordInput: "",
         newFullNameInput: "",
+        newPostBody: "",
 
         errorMessage: "",
 
@@ -22,6 +23,8 @@ var app = new Vue({
         createThreadName: "",
         createThreadDescription: "",
         createThreadCategory: "",
+
+        commenting: false,
     },
     methods: {
         // GET /session - Ask server if we are logged in
@@ -185,6 +188,7 @@ var app = new Vue({
 
                 // Take user to new page and clear inputs
                 this.currentPage = "home-page";
+                this.getThreads();
                 this.createThreadName = "";
                 this.createThreadDescription = "";
                 this.createThreadCategory = "";
@@ -209,6 +213,7 @@ var app = new Vue({
             }
         },
         loadThreadPage: function () {
+            this.postBody = "";
             this.currentPage = 'thread';
         },
         getSingleThread: async function (id) {
@@ -237,7 +242,24 @@ var app = new Vue({
             } else {
                 console.error("Error deleting thread with id", id, "- status:", response.status);
             }
-        }
+        },
+        // POST /post - posts a comment to a thread
+        postPost: async function (id) {
+            let postBody = {
+                body: this.newPostBody,
+                thread_id: id
+            }
+
+            let response = await fetch(URL + "/post", {
+                method: "POST",
+                body: JSON.stringify(postBody),
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include"
+            });
+            this.loadThreadPage();
+        },
     },
     created: function () {
         this.getSession();
