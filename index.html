@@ -11,7 +11,7 @@
     <title>Forum App</title>
 </head>
 <body>
-    <div id="app">
+    <div id="app" v-cloak>
         <div id="login-container" v-show="currentPage == 'login-page'">
             <div id="login-form">
                 <h1>Login</h1>
@@ -35,7 +35,35 @@
             </div>
         </div>
         <section id="home-page" v-show="currentPage == 'home-page'">
-            <h1>Home Page</h1>
+            <h1 class="page-title">Home Page</h1>
+            <button @click="currentPage = 'create-thread-page'" class="button-style">Create Thread</button>
+            <div id="thread" v-for="(thread,index) in allThreads" class="thread">
+                <p>Posted by: {{ thread.user.username }}</p><br>
+                <p>Created at: {{ thread.createdAt }}</p>
+                <h1>{{ thread.name }}</h1><br>
+                <p>{{ thread.category }}</p><br>
+                <h4>{{ thread.description }}</h4>
+                <button @click="currentThread = thread._id">View Thread</button>
+            </div>
+        </section>
+        <section id="create-thread" v-show="currentPage == 'create-thread-page'">
+            <h1 class="page-title">Create Thread</h1>
+            <div id="create-thread-container">
+                <input type="text" id="thread-name" placeholder="Enter thread name" class="input-style">
+                <input type="text" id="thread-description" placeholder="Enter thread description" class="input-style">
+                <input type="text" id="thread-category" placeholder="Enter thread category" class="input-style">
+                <button class="button-style" @click="postThread">Create Thread</button>
+                <p class="alert-message">{{ errorMessage }}</p>
+            </div>
+        </section>
+        <section v-show="currentPage == 'thread'">
+            <h1>{{ currentThread.name }}</h1>
+            <div v-for="post in currentThread.posts">
+                <p>
+                    {{ post.body }} - 
+                    <i>{{ post.user.fullname }}</i>
+                </p>
+            </div>
         </section>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>

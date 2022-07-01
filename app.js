@@ -15,6 +15,13 @@ var app = new Vue({
         newFullNameInput: "",
 
         errorMessage: "",
+
+        allThreads: [],
+        currentThread: "",  
+
+        createThreadName: "",
+        createThreadDescription: "",
+        createThreadCategory: "",
     },
     methods: {
         // GET /session - Ask server if we are logged in
@@ -31,6 +38,7 @@ var app = new Vue({
                 let data = await response.json();
                 console.log(data);
                 this.currentPage = "home-page"
+                this.getThreads();
             } else if (response.status == 401) {
                 // not logged in
                 console.log("not logged in");
@@ -62,6 +70,7 @@ var app = new Vue({
 
                 // Take user to new page and clear inputs
                 this.currentPage = "home-page";
+                this.getThreads();
                 this.loginEmailInput = "";
                 this.loginPasswordInput = "";
 
@@ -128,6 +137,91 @@ var app = new Vue({
                 setInterval(() => {
                     this.errorMessage = "";
                 }, 5000);
+            }
+        },
+        // GET /threads - Get all threads
+        getThreads: async function () {
+            let response = await fetch(`${URL}/thread`, {
+                method: "GET",
+                credentials: "include"
+            });
+
+            // Parse response body
+            let body = await response.json();
+            console.log(body);
+
+            // Check if threads were retrieved
+            if (response.status == 200) {
+                console.log("Successful thread retrieval");
+                this.currentPage = "home-page";
+                this.allThreads = body;
+            } else {
+                console.log("error GETTING /thread", response.status, response);
+            }
+        },
+        // POST /threads - Create new thread
+        postThread: async function () {
+            let newThread = {
+                name: this.createThreadName,
+                description: this.createThreadDescription,
+                category: this.createThreadCategory
+            }
+            let response = await fetch(`${URL}/thread`, {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(newThread)
+            }); 
+
+            // Parse response body
+            let body = await response.json();
+            console.log(body);
+
+            // Check if thread was created
+            if (response.status == 201) {
+                console.log("Successful thread creation");
+
+                // Take user to new page and clear inputs
+                this.currentPage = "home-page";
+                this.createThreadName = "";
+                this.createThreadDescription = "";
+                this.createThreadCategory = "";
+
+            } else if (response.status == 400) {
+                console.log("Unsuccessful thread creation");
+                this.errorMessage = "Unsuccessful thread creation"
+                setInterval(() => {
+                    this.errorMessage = "";
+                }, 5000);
+
+                // Let user know thread creation failed and clear inputs
+                this.createThreadName = "";
+                this.createThreadDescription = "";
+                this.createThreadCategory = "";
+            } else {
+                console.log("error POSTING /threads", response.status, response);
+                this.errorMessage = "Ensure all fields are filled out"
+                setInterval(() => {
+                    this.errorMessage = "";
+                }, 5000);
+            }
+        },
+        loadThreadPage: function () {
+            this.setPage("thread");
+        },
+        getSingleThread: async function (id) {
+            let response = await fetch(URL + "/thread/" + id, {
+                credentials: "include"
+            });
+
+            // check response status
+            if (response.status == 200) {
+                this.currentThread = await response.json();
+                this.loadThreadPage();
+            } else {
+                console.error("Error fetching individual request with id", id, "- status:", response.status);
             }
         }
     },

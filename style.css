@@ -1,3 +1,7 @@
+[v-cloak] {
+    display: none !important;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -91,10 +95,46 @@
     box-shadow: 5px 5px 10px black;
 }
 
-/* ========== ALERT AREA =================== */
+/* ================ ALERT AREA =================== */
 .alert-message {
     color: red;
     font-size: 20px;
     position: absolute;
     bottom: 10%;
+}
+
+/* ================ HOME PAGE =================== */
+#home-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-title {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    color: #20ad00;
+}
+
+.thread {
+    padding: 100px;
+    background-color: rgb(205, 205, 205);
+    margin: 20px;
+    width: 100%;
+}
+
+/* ====================== CREATE THREAD PAGE ===================== */
+#create-thread {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#create-thread-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
