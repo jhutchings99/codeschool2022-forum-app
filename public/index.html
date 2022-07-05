@@ -53,11 +53,12 @@
                 <input type="text" id="thread-description" placeholder="Enter thread description" class="input-style" v-model="createThreadDescription">
                 <input type="text" id="thread-category" placeholder="Enter thread category" class="input-style" v-model="createThreadCategory">
                 <button class="button-style" @click="postThread">Create Thread</button>
+                <button class="button-style" @click="currentPage = 'home-page'" v-bind:style="{ backgroundColor : 'red' }">Back to Threads</button>
                 <p class="alert-message">{{ errorMessage }}</p>
             </div>
         </section>
         <section id="thread-page" v-show="currentPage == 'thread'">
-            <button class="button-style" @click="currentPage = 'home-page'">Back to threads</button>
+            <button class="button-style" @click="currentPage = 'home-page'">Back to Threads</button>
             <h1>Thread</h1>
             <div class="thread">
                 <p v-if="currentPage == 'thread'">Posted by: {{ currentThread.user.fullname }}</p><br>
