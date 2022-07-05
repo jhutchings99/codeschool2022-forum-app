@@ -15,7 +15,7 @@ const opn = require("opn");
 opn(`http://localhost:${config.port}`);
 
 // Pull in schema
-const { User } = require("./persist/model");
+const { User, Thread } = require("./persist/model");
 
 // Pull in authentication and authorization
 const setUpAuth = require("./auth");
@@ -46,11 +46,30 @@ app.get("/thread/:id", (req, res) => {
 });
 
 app.get("/thread", (req, res) => {
-    
+    if (!req.user) {
+        res.status(401).json({message: "Unauthorized"});
+        return;
+    }
 });
 
-app.post("/thread", (req, res) => {
-
+app.post("/thread", async (req, res) => {
+    // Auth
+    if (!req.user) {
+        res.status(401).json({message: "Unauthorized"});
+        return;
+    }
+    // Create thread
+    try {
+        let thread = await Thread.create({
+            user_id: req.user.id,
+            name: req.body.name,
+            description: req.body.description,
+            category: req.body.category,
+        });
+        res.status(201).json(thread)
+    } catch (err) {
+        res.status(500).json({message: "Failed to create thread"}, err)
+    }
 });
 
 app.post("/post", (req, res) => {
