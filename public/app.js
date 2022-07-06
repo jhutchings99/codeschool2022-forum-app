@@ -255,11 +255,17 @@ var app = new Vue({
                 method: "POST",
                 body: JSON.stringify(postBody),
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type" : "application/json"
                 },
                 credentials: "include"
             });
-            this.loadThreadPage();
+
+            if (response.status == 201) {
+                // created successfully
+                this.getSingleThread(id);
+            } else {
+                console.log("Error posting new post:", response.status);
+            }
         },
     },
     created: function () {
