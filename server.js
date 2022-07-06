@@ -40,9 +40,18 @@ app.post("/users", async (req, res) => {
     }
 });
 
-
-app.get("/thread/:id", (req, res) => {
-    
+let thread = {};
+app.get("/thread/:id", async (req, res) => {
+    // Get thread by id
+    try {
+        thread = await Thread.findById(req.params.id);
+    } catch (err) {
+        res.status(500).json({
+            message: `get request failed to get thread`,
+            error: err,
+        });
+    }
+    res.status(200).json(thread)
 });
 
 let threads = [];
