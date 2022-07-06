@@ -45,11 +45,27 @@ app.get("/thread/:id", (req, res) => {
     
 });
 
-app.get("/thread", (req, res) => {
-    if (!req.user) {
-        res.status(401).json({message: "Unauthorized"});
-        return;
+let threads = [];
+app.get("/thread", async (req, res) => {
+    // List all threads
+    try {
+        threads = await Thread.find({}, "-posts");
+    } catch (err) {
+        res.status(500).json({message: `get request failed to list threads`, err});
+        console.log("messed up", err)
     }
+
+    // Get all users for all the threads
+    for (let k in threads) {
+        threads[k] = threads[k].toObject();
+        try {
+            let user = await User.findById(threads[k].user_id, "-password");
+            threads[k].user = user;
+        } catch (err) {
+            console.log('unable to get user')
+        }
+    }
+    res.status(200).json(threads);
 });
 
 app.post("/thread", async (req, res) => {

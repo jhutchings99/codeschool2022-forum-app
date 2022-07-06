@@ -1,4 +1,5 @@
-const URL = "https://forum2022.codeschool.cloud";
+// const URL = "https://forum2022.codeschool.cloud";
+const URL = "http://localhost:8080"
 
 var app = new Vue({
     el: '#app',
@@ -100,7 +101,7 @@ var app = new Vue({
                 password: this.newPasswordInput,
                 fullname: this.newFullNameInput
             }
-            let response = await fetch(`${URL}/user`, {
+            let response = await fetch(`${URL}/users`, {
                 method: "POST",
                 credentials: "include",
                 headers: {
